@@ -30,7 +30,7 @@ module.exports = {
 		})
 	},
 
-	addImgs: function(prev_url, newImgs){
+	addImgs: function(mosaicId, newImgs){
 		var that = this;
 		var str = "token="+mos_token+"&"
 		newImgs.forEach(url => {
@@ -38,7 +38,7 @@ module.exports = {
 		});
 		request.patch({
 				headers: {'content-type' : 'application/x-www-form-urlencoded'},
-				url: 'https://www.printmosaic.com/api/v2/mosaics/'+prev_url,
+				url: 'https://www.printmosaic.com/api/v2/mosaics/'+mosaicId,
 				body: str
 				},
 				function callback(err, http, body){
@@ -46,12 +46,12 @@ module.exports = {
 						console.log(err)
 					}
 			console.log("SUCCESS",err, body)
-			return that.generate(prev_url);
+			return that.generate(mosaicId);
 		})
 	},
 
-	generate: function(prev_url){
-		request.post('https://www.printmosaic.com/api/v2/mosaics/'+prev_url+'/generate_preview',
+	generate: function(mosaicId){
+		request.post('https://www.printmosaic.com/api/v2/mosaics/'+mosaicId+'/generate_preview',
 		 {form:{"token": mos_token}}, function callback(err, http, body){
 		 	if(err){
 		 		console.error(err)
@@ -59,9 +59,9 @@ module.exports = {
 		 	console.log(body);
 		 })
 		//check until it's finished
-		console.log("https://www.printmosaic.com/mosaics/"+prev_url)
+		console.log("https://www.printmosaic.com/mosaics/"+mosaicId)
 
-		return "https://www.printmosaic.com/mosaics/"+prev_url
+		return "https://www.printmosaic.com/mosaics/"+mosaicId
 	}
 
 	
