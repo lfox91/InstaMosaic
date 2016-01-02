@@ -1,5 +1,4 @@
 var mos_token = "6dRNPXKXSPnOoAwCkQ9B6YtZbpwOCaXf"
-var images = ["https://s3.amazonaws.com/printmosaic-assets/api_tutorial/yellow.jpg", "https://s3.amazonaws.com/printmosaic-assets/api_tutorial/orange.jpg", "https://s3.amazonaws.com/printmosaic-assets/api_tutorial/two_flowers.jpg"]
 var prevDat =  { "token": mos_token,
 				"path": null,
 				"resolution[]": "100",
@@ -61,7 +60,7 @@ module.exports = {
 		 })
 		//check until it's finished
 		console.log("https://www.printmosaic.com/mosaics/"+prev_url)
-		
+
 		return "https://www.printmosaic.com/mosaics/"+prev_url
 	}
 

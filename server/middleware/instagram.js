@@ -47,6 +47,7 @@ module.exports = {
 			picArray.push(req.data[i].images.low_resolution);
 		}
 		console.log(picArray);
+		var ret = mosaic.prev(picArray);
 	}
 	
 }
