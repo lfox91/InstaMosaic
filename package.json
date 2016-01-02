@@ -1,0 +1,22 @@
+{
+  "name": "insta_mosaic",
+  "version": "1.0.0",
+  "description": "convert profile pic into photomosaic",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "instagram",
+    "photomosaic",
+    "collage",
+    "profile"
+  ],
+  "author": "Daniel Levin, Lea Fox",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.3",
+    "jquery": "^2.1.4"
+  }
+}
