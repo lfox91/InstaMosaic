@@ -1,4 +1,5 @@
 var request = require('request');
+var mosaic = require('./mosaic.js')
 var $ = require('jquery');
 
 module.exports = {
@@ -47,4 +48,5 @@ module.exports = {
 		}
 		console.log(picArray);
 	}
+	
 }
