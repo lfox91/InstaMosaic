@@ -37,7 +37,7 @@ module.exports = {
 	addImgs: function(req, res, next){
 		var that = this;
 		var str = "token="+mos_token+"&"
-		req.newImgs.forEach(url => {
+		req.newImgs.forEach( function(url) {
 	  		str += 'images[]=' + url + '&';
 		});
 		//added stuff to boday
