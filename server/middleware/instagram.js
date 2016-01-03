@@ -41,12 +41,17 @@ module.exports = {
 				}				
 			})
 	},
-	parse: function(req, res){
+	parse: function(req, res, next){
 		picArray = [req.prof];
 		for(var i =0; i<req.data.length; i++){
 			picArray.push(req.data[i].images.low_resolution);
 		}
 		console.log(picArray);
+		req.picArray = picArray;
+		next();
+
+		// var ret = mosaic.prev(picArray);
+		// res.send(mosaic.prev(picArray))
 	}
-	
+
 }

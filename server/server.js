@@ -11,7 +11,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get(/(^\/)/, instagram.getInsta, instagram.postInsta, instagram.photos, instagram.parse);
+app.get(/(^\/)/, instagram.getInsta, instagram.postInsta, instagram.photos, instagram.parse, mosaic.prev, mosaic.addImgs, mosaic.generate);
 app.get('/', 
 	function(req,res){ 
 		res.sendFile('../client/index.html', {root: __dirname});
