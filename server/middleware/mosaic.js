@@ -9,10 +9,12 @@ var request = require('request')
 
 
 module.exports = {
-	prev: function(imagesArray){       
+	prev: function(req, res, next){   
+
 		var that = this;                 
 		// var info = req.body
-		prevDat.path = imagesArray[0];
+		var picArray = req.picArray;
+		prevDat.path = picArray[0];
 		request.post('https://www.printmosaic.com/api/v2/mosaics', {form: prevDat}, function callback(err, http, body){
 			if(err){
 				console.log(err)
@@ -22,23 +24,26 @@ module.exports = {
 			//parse body to get url
 			var ret = JSON.parse(body)
 			//remove first item from array
-			imagesArray = imagesArray.slice(1)
-			imagesArray.forEach(function(a){
+			picArray = picArray.slice(1)
+			picArray.forEach(function(a){
 				newImgs.push(a.url)
 			});
-			return that.addImgs(ret.mosaic_id, newImgs)
+			req.newImgs = newImgs;
+			req.mosaicId = ret.mosaic_id;
+			next();
 		})
 	},
 
-	addImgs: function(mosaicId, newImgs){
+	addImgs: function(req, res, next){
 		var that = this;
 		var str = "token="+mos_token+"&"
-		newImgs.forEach(url => {
+		req.newImgs.forEach(url => {
 	  		str += 'images[]=' + url + '&';
 		});
+		//added stuff to boday
 		request.patch({
 				headers: {'content-type' : 'application/x-www-form-urlencoded'},
-				url: 'https://www.printmosaic.com/api/v2/mosaics/'+mosaicId,
+				url: 'https://www.printmosaic.com/api/v2/mosaics/'+req.mosaicId,
 				body: str
 				},
 				function callback(err, http, body){
@@ -46,12 +51,12 @@ module.exports = {
 						console.log(err)
 					}
 			console.log("SUCCESS",err, body)
-			return that.generate(mosaicId);
+			next();
 		})
 	},
 
-	generate: function(mosaicId){
-		request.post('https://www.printmosaic.com/api/v2/mosaics/'+mosaicId+'/generate_preview',
+	generate: function(req, res){
+		request.post('https://www.printmosaic.com/api/v2/mosaics/'+req.mosaicId+'/generate_preview',
 		 {form:{"token": mos_token}}, function callback(err, http, body){
 		 	if(err){
 		 		console.error(err)
@@ -59,9 +64,9 @@ module.exports = {
 		 	console.log(body);
 		 })
 		//check until it's finished
-		console.log("https://www.printmosaic.com/mosaics/"+mosaicId)
+		console.log("https://www.printmosaic.com/mosaics/"+req.mosaicId)
 
-		return "https://www.printmosaic.com/mosaics/"+mosaicId
+		res.redirect("https://www.printmosaic.com/mosaics/"+req.mosaicId)
 	}
 
 	
